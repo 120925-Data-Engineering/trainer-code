@@ -1,12 +1,14 @@
 # Spark Submit
 
 ## Learning Objectives
+
 - Master the spark-submit command and its options
 - Understand deployment modes (client vs cluster)
 - Package and deploy Spark applications
 - Pass arguments and configurations effectively
 
 ## Why This Matters
+
 spark-submit is the gateway to running Spark applications in production. Whether you are deploying to YARN, Kubernetes, or a standalone cluster, understanding spark-submit options ensures your applications run with the right resources and configurations.
 
 ## The Concept
@@ -14,6 +16,7 @@ spark-submit is the gateway to running Spark applications in production. Whether
 ### What is spark-submit?
 
 spark-submit is the command-line tool for submitting Spark applications to a cluster. It handles:
+
 - Packaging your application
 - Setting up the classpath
 - Configuring resources
@@ -26,6 +29,7 @@ spark-submit [options] <app> [app arguments]
 ```
 
 Example:
+
 ```bash
 spark-submit --master yarn --deploy-mode cluster my_app.py --input data.csv
 ```
@@ -85,6 +89,7 @@ spark-submit --master yarn --deploy-mode cluster my_app.py --input data.csv
 ### Deployment Modes
 
 #### Client Mode
+
 - Driver runs on the machine where spark-submit is executed
 - Good for interactive and debugging
 - Results returned to local terminal
@@ -107,6 +112,7 @@ spark-submit --master yarn --deploy-mode client app.py
 ```
 
 #### Cluster Mode
+
 - Driver runs on a cluster node
 - Better for production
 - Application continues if client disconnects
@@ -132,6 +138,7 @@ spark-submit --master yarn --deploy-mode cluster app.py
 ### Common Submission Patterns
 
 #### Basic Python Application
+
 ```bash
 spark-submit \
     --master local[*] \
@@ -139,6 +146,7 @@ spark-submit \
 ```
 
 #### YARN Cluster Submission
+
 ```bash
 spark-submit \
     --master yarn \
@@ -151,6 +159,7 @@ spark-submit \
 ```
 
 #### With Dependencies
+
 ```bash
 spark-submit \
     --master yarn \
@@ -160,6 +169,7 @@ spark-submit \
 ```
 
 #### With Maven Packages
+
 ```bash
 spark-submit \
     --master yarn \
@@ -168,6 +178,7 @@ spark-submit \
 ```
 
 #### With Configuration
+
 ```bash
 spark-submit \
     --master yarn \
@@ -180,11 +191,13 @@ spark-submit \
 ### Packaging Python Applications
 
 #### Single File
+
 ```bash
 spark-submit app.py
 ```
 
 #### Multiple Files
+
 ```bash
 # Create zip of modules
 zip -r mypackage.zip mypackage/
@@ -194,6 +207,7 @@ spark-submit --py-files mypackage.zip main.py
 ```
 
 #### Using requirements
+
 ```bash
 # Create environment with dependencies
 pip install -r requirements.txt -t ./deps
@@ -229,6 +243,7 @@ if __name__ == "__main__":
 ```
 
 Submit with arguments:
+
 ```bash
 spark-submit my_app.py \
     --input hdfs://data/input \
@@ -248,6 +263,7 @@ PYSPARK_PYTHON=/usr/bin/python3 spark-submit app.py
 ```
 
 Common environment variables:
+
 - `PYSPARK_PYTHON`: Python interpreter on workers
 - `PYSPARK_DRIVER_PYTHON`: Python interpreter on driver
 - `SPARK_HOME`: Spark installation directory
@@ -258,6 +274,7 @@ Common environment variables:
 Here is a complete example application with proper spark-submit usage:
 
 **my_etl_job.py:**
+
 ```python
 #!/usr/bin/env python3
 """
@@ -415,6 +432,7 @@ spark-submit \
 ```
 
 ## Summary
+
 - spark-submit is the standard tool for deploying Spark applications
 - Use --master to specify the cluster manager (local, yarn, k8s, spark://)
 - Choose --deploy-mode client for development, cluster for production
@@ -425,6 +443,7 @@ spark-submit \
 - Environment variables control Python interpreter and paths
 
 ## Additional Resources
+
 - [Submitting Applications](https://spark.apache.org/docs/latest/submitting-applications.html)
 - [Spark Configuration](https://spark.apache.org/docs/latest/configuration.html)
 - [Running on YARN](https://spark.apache.org/docs/latest/running-on-yarn.html)

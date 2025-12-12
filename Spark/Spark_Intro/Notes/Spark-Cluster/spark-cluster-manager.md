@@ -1,12 +1,14 @@
 # Spark Cluster Manager
 
 ## Learning Objectives
+
 - Understand the role of cluster managers in Spark
 - Compare Standalone, YARN, Mesos, and Kubernetes cluster managers
 - Identify when to use each cluster manager type
 - Configure Spark for different cluster environments
 
 ## Why This Matters
+
 In production, Spark runs on clusters managed by cluster managers. Choosing the right cluster manager depends on your infrastructure, team expertise, and workload requirements. Understanding these options helps you deploy Spark applications in the most suitable environment for your organization.
 
 ## The Concept
@@ -14,6 +16,7 @@ In production, Spark runs on clusters managed by cluster managers. Choosing the 
 ### What is a Cluster Manager?
 
 A cluster manager is responsible for:
+
 - **Resource allocation:** Distributing CPU, memory across applications
 - **Job scheduling:** Running multiple applications concurrently
 - **Monitoring:** Tracking node health and application status
@@ -39,19 +42,23 @@ A cluster manager is responsible for:
 ### Supported Cluster Managers
 
 #### 1. Standalone Mode
+
 Spark's built-in simple cluster manager.
 
 **Pros:**
+
 - Easy to set up
 - No external dependencies
 - Good for dedicated Spark clusters
 
 **Cons:**
+
 - Limited scheduling capabilities
 - Single workload type (Spark only)
 - Basic resource management
 
 **Configuration:**
+
 ```python
 spark = SparkSession.builder \
     .master("spark://master-host:7077") \
@@ -60,6 +67,7 @@ spark = SparkSession.builder \
 ```
 
 **Cluster setup:**
+
 ```bash
 # Start master
 $SPARK_HOME/sbin/start-master.sh
@@ -69,20 +77,24 @@ $SPARK_HOME/sbin/start-worker.sh spark://master-host:7077
 ```
 
 #### 2. Apache YARN
+
 Hadoop's resource manager, widely used in enterprise environments.
 
 **Pros:**
+
 - Integrates with Hadoop ecosystem
 - Mature and battle-tested
 - Dynamic resource allocation
 - Multi-tenant support
 
 **Cons:**
+
 - Requires Hadoop infrastructure
 - More complex setup
 - HDFS dependency for some features
 
 **Configuration:**
+
 ```python
 spark = SparkSession.builder \
     .master("yarn") \
@@ -92,6 +104,7 @@ spark = SparkSession.builder \
 ```
 
 **Submit command:**
+
 ```bash
 spark-submit --master yarn \
              --deploy-mode cluster \
@@ -100,19 +113,23 @@ spark-submit --master yarn \
 ```
 
 #### 3. Apache Mesos
+
 General-purpose cluster manager (now less common).
 
 **Pros:**
+
 - Fine-grained resource sharing
 - Multi-framework support
 - Flexible scheduling
 
 **Cons:**
+
 - Complex to operate
 - Declining adoption
 - Less community support
 
 **Configuration:**
+
 ```python
 spark = SparkSession.builder \
     .master("mesos://mesos-master:5050") \
@@ -121,20 +138,24 @@ spark = SparkSession.builder \
 ```
 
 #### 4. Kubernetes
+
 Container orchestration platform, increasingly popular.
 
 **Pros:**
+
 - Cloud-native deployment
 - Container isolation
 - Auto-scaling capabilities
 - Wide cloud provider support
 
 **Cons:**
+
 - Requires Kubernetes expertise
 - Container overhead
 - More complex networking
 
 **Configuration:**
+
 ```python
 spark = SparkSession.builder \
     .master("k8s://https://kubernetes-api:6443") \
@@ -144,6 +165,7 @@ spark = SparkSession.builder \
 ```
 
 **Submit command:**
+
 ```bash
 spark-submit --master k8s://https://k8s-api:6443 \
              --deploy-mode cluster \
@@ -167,6 +189,7 @@ spark-submit --master k8s://https://k8s-api:6443 \
 Regardless of cluster manager, Spark supports two deployment modes:
 
 #### Client Mode
+
 - Driver runs on the client machine
 - Good for interactive development
 - Results returned directly to client
@@ -176,6 +199,7 @@ spark-submit --deploy-mode client app.py
 ```
 
 #### Cluster Mode
+
 - Driver runs on a cluster node
 - Better for production workloads
 - Survives client disconnection
@@ -201,16 +225,19 @@ spark = SparkSession.builder \
 ### Choosing a Cluster Manager
 
 **Choose Standalone when:**
+
 - Quick setup for testing/development
 - Dedicated Spark cluster
 - Simple workload requirements
 
 **Choose YARN when:**
+
 - Existing Hadoop infrastructure
 - Enterprise multi-tenant environment
 - Integration with Hive, HBase, etc.
 
 **Choose Kubernetes when:**
+
 - Cloud-native infrastructure
 - Container-based deployments
 - Need for auto-scaling
@@ -326,6 +353,7 @@ if __name__ == "__main__":
 ```
 
 **Output (local mode):**
+
 ```
 Connecting to cluster: local[*]
 
@@ -349,6 +377,7 @@ Done.
 ```
 
 ## Summary
+
 - Cluster managers handle resource allocation, scheduling, and monitoring
 - Standalone is Spark's simple built-in cluster manager
 - YARN integrates well with existing Hadoop infrastructure
@@ -358,6 +387,7 @@ Done.
 - All cluster managers support client and cluster deployment modes
 
 ## Additional Resources
+
 - [Cluster Mode Overview](https://spark.apache.org/docs/latest/cluster-overview.html)
 - [Running on YARN](https://spark.apache.org/docs/latest/running-on-yarn.html)
 - [Running on Kubernetes](https://spark.apache.org/docs/latest/running-on-kubernetes.html)
