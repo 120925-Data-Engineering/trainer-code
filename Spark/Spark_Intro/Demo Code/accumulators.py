@@ -1,4 +1,4 @@
-from pyspark import SparkContext
+from pyspark import AccumulatorParam, SparkContext
 
 sc = SparkContext("local[*]", "AccumulatorsDemo")
 
@@ -67,4 +67,29 @@ print(valid_values)
 
 print(total_records)
 print(error_count)
+
+# Custom Accumulator example
+
+# To use a custom accumulator, its a bit like creating a custom exception.
+class myStringAccumulator(AccumulatorParam): # I need to implement a few methods
     
+    # reset - resetting the accumulator (optional)
+
+    # zero - What is the logic to determine the default value 
+    def zero(self, initial_value):
+        return set() # return an empty python set 
+    
+    # addInPlace - logic to add a value from a worker task to the accumulator
+    def addInPlace(self, value1, value2):
+       value1.update(value2)
+       return value1
+    
+unique_words = sc.accumulator(set(), myStringAccumulator()) # initial value, and what kind of accumulator
+
+def collect_words(word):
+    unique_words.add({word})
+    return word
+
+rdd.map(collect_words).collect()
+
+print(unique_words)
