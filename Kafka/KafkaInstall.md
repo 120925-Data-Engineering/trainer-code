@@ -18,6 +18,7 @@ Run the ls -al command to list the contents of the kafka directory
 Run the following command to start ZooKeeper:
 
 ```cd  kafka_2.13-3.7.1```
+
 ```bin/zookeeper-server-start.sh config/zookeeper.properties```
 
 ZooKeeper will be ready in a short time, typically around a second or two.
