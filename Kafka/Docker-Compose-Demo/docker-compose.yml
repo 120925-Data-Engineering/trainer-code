@@ -1,0 +1,75 @@
+services:
+  # --- INFRASTRUCTURE: Confluent Zookeeper ---
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "2181:2181"
+
+  # --- INFRASTRUCTURE: Confluent Kafka ---
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9093:9093"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      # Define listeners: Internal (kafka:9092) for Docker containers, External (localhost:9093) for host
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,EXTERNAL://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,EXTERNAL://localhost:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      # Critical for single-node setups:
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  # --- PRODUCER: The Python Script ---
+  generator:
+    image: python:3.9-slim
+    container_name: generator
+    depends_on:
+      - kafka
+    volumes:
+      - ./scripts:/app
+    working_dir: /app
+    # Sleep increased to 30s because Confluent Kafka takes a moment to initialize
+    command: >
+      bash -c "pip install kafka-python && 
+               echo 'Waiting 30s for Kafka to launch...' && 
+               sleep 30 && 
+               python event_generator.py"
+
+  # --- SPARK MASTER (Sticking with Bitnami as it works well for Spark) ---
+  spark-master:
+    image: bitnamilegacy/spark:3.5
+    container_name: spark-master
+    user: root
+    environment:
+      - SPARK_MODE=master
+    ports:
+      - "8080:8080"
+      - "7077:7077"
+    volumes:
+      - ./scripts:/app
+      - spark-ivy:/opt/bitnami/spark/.ivy2
+
+  # --- SPARK WORKER ---
+  spark-worker:
+    image: bitnamilegacy/spark:3.5
+    depends_on:
+      - spark-master
+    user: root
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+    volumes:
+      - ./scripts:/app
+      - spark-ivy:/opt/bitnami/spark/.ivy2
+
+volumes:
+  spark-ivy:
