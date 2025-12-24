@@ -15,7 +15,7 @@ A fully containerized, end-to-end data pipeline system that ingests real-time ev
 Producers (Faker) -> Kafka Topics -> Batch Consumer -> Landing Zone (JSON)
                                                               |
                                                               v
-                                     Gold Zone (Parquet) <- Spark ETL
+                                     Gold Zone (CSV) <- Spark ETL
 ```
 
 ### Why This Pattern?
