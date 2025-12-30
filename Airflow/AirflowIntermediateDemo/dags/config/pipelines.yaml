@@ -29,3 +29,7 @@ pipelines:
   - name: inventory
     source: postgres
     schedule: "@daily"
+
+  - name: students
+    source: postgres
+    schedule: "@daily"
