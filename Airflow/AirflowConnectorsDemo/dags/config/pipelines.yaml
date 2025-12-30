@@ -1,0 +1,31 @@
+# Pipeline Configuration for Dynamic DAG Demo
+# Add or remove pipelines here to see them appear in the DAG
+
+pipelines:
+  - name: users
+    source: postgres
+    destination: warehouse
+    schedule: "@daily"
+    priority: high
+
+  - name: orders
+    source: postgres
+    destination: warehouse
+    schedule: "@hourly"
+    priority: high
+
+  - name: products
+    source: postgres
+    destination: warehouse
+    schedule: "@daily"
+    priority: medium
+
+  - name: events
+    source: kafka
+    destination: data_lake
+    schedule: "@daily"
+    priority: low
+
+  - name: inventory
+    source: postgres
+    schedule: "@daily"
