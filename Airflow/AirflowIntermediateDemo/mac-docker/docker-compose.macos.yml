@@ -218,7 +218,7 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./jobs:/opt/spark-jobs
-      - ./data:/opt/spark-data
+      - spark_data:/opt/spark-data
     healthcheck:
       test: [ "CMD", "curl", "--fail", "http://localhost:8080/health" ]
       interval: 30s
@@ -255,7 +255,7 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./jobs:/opt/spark-jobs
-      - ./data:/opt/spark-data
+      - spark_data:/opt/spark-data
       # Docker socket for running docker exec commands (spark-submit)
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
