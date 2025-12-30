@@ -85,40 +85,57 @@ services:
       - pipeline-network
 
   # =============================================================================
-  # SPARK (Master + Worker)
+  # SPARK (Master + Worker) - Using official Apache Spark image
+  # Must match Spark version in Dockerfile.airflow exactly (3.5.0)
   # =============================================================================
+  # Init container to set up volume permissions
+  spark-init:
+    image: busybox
+    container_name: pipeline-spark-init
+    command: [ "sh", "-c", "mkdir -p /opt/spark-data/landing /opt/spark-data/gold && chmod -R 777 /opt/spark-data" ]
+    volumes:
+      - spark_data:/opt/spark-data
+    networks:
+      - pipeline-network
+
   spark-master:
-    image: bitnamilegacy/spark:3.5
+    image: apache/spark:3.5.0
     container_name: pipeline-spark-master
     user: root
     ports:
       - "7077:7077"
       - "8081:8080"
     environment:
-      - SPARK_MODE=master
       - SPARK_MASTER_HOST=spark-master
-      - SPARK_RPC_AUTHENTICATION_ENABLED=no
-      - SPARK_RPC_ENCRYPTION_ENABLED=no
+      - SPARK_NO_DAEMONIZE=true
+    command: [ "/opt/spark/sbin/start-master.sh" ]
     volumes:
       - ./jobs:/opt/spark-jobs
-      - ./data:/opt/spark-data
+      - spark_data:/opt/spark-data
+    depends_on:
+      spark-init:
+        condition: service_completed_successfully
     networks:
       - pipeline-network
 
   spark-worker:
-    image: bitnamilegacy/spark:3.5
+    image: apache/spark:3.5.0
     container_name: pipeline-spark-worker
     user: root
     depends_on:
-      - spark-master
+      spark-init:
+        condition: service_completed_successfully
+      spark-master:
+        condition: service_started
     environment:
-      - SPARK_MODE=worker
-      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_MASTER=spark://spark-master:7077
       - SPARK_WORKER_MEMORY=2G
       - SPARK_WORKER_CORES=2
+      - SPARK_NO_DAEMONIZE=true
+    command: [ "/opt/spark/sbin/start-worker.sh", "spark://spark-master:7077" ]
     volumes:
       - ./jobs:/opt/spark-jobs
-      - ./data:/opt/spark-data
+      - spark_data:/opt/spark-data
     networks:
       - pipeline-network
 
@@ -261,3 +278,4 @@ volumes:
   zookeeper_logs:
   kafka_data:
   postgres_data:
+  spark_data:
