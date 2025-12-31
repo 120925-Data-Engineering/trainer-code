@@ -3,7 +3,7 @@ Spark Job DAG - Demonstrates triggering Spark via spark-submit
 
 This DAG shows how to:
 1. Use BashOperator to call spark-submit
-2. Pass parameters using Jinja templating
+2. Pass Airflow's execution date for date-partitioned output
 3. Handle errors and retries
 """
 from airflow import DAG
@@ -23,7 +23,10 @@ default_args = {
 def validate_output(**context):
     """Validate that Spark job produced expected CSV output."""
     import os
-    output_path = "/opt/spark-data/gold"
+    
+    # Get the execution date from Airflow context
+    run_date = context["ds"]  # Format: YYYY-MM-DD
+    output_path = f"/opt/spark-data/gold/date={run_date}"
     
     if os.path.exists(output_path):
         csv_files = [f for f in os.listdir(output_path) if f.endswith('.csv')]
@@ -47,6 +50,9 @@ with DAG(
     # Task 1: Run Spark ETL Job
     # Airflow container has Spark client installed (via Dockerfile.airflow)
     # This allows direct spark-submit to the Spark Master
+    # 
+    # Key: {{ ds }} passes Airflow's execution date (YYYY-MM-DD) to the job
+    # This enables date-partitioned output: /gold/date=2025-12-30/
     run_spark_job = BashOperator(
         task_id="run_spark_etl",
         bash_command="""
@@ -56,11 +62,12 @@ with DAG(
                 --name "AirflowTriggeredETL" \
                 /opt/spark-jobs/sample_etl_job.py \
                 /opt/spark-data/landing \
-                /opt/spark-data/gold
+                /opt/spark-data/gold \
+                {{ ds }}
         """,
     )
     
-    # Task 2: Validate the output
+    # Task 2: Validate the output (uses {{ ds }} via context)
     validate = PythonOperator(
         task_id="validate_output",
         python_callable=validate_output,
@@ -69,7 +76,7 @@ with DAG(
     # Task 3: Notify success
     notify_success = BashOperator(
         task_id="notify_success",
-        bash_command='echo "Spark ETL completed successfully at $(date)"',
+        bash_command='echo "Spark ETL completed for {{ ds }} at $(date)"',
     )
     
     # Dependencies

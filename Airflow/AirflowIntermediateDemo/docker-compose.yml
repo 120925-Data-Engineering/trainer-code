@@ -230,6 +230,8 @@ services:
       context: .
       dockerfile: Dockerfile.airflow
     container_name: pipeline-airflow-scheduler
+    # Run as root to match Spark container permissions for shared volume access
+    user: root
     command: scheduler
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor

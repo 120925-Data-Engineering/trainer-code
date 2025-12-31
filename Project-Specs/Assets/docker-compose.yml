@@ -136,6 +136,8 @@ services:
       context: .
       dockerfile: Dockerfile.airflow
     container_name: streamflow-airflow
+    # Run as root to match Spark container permissions for shared volume access
+    user: root
     ports:
       - "8082:8080"
     environment:
