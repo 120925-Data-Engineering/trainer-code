@@ -152,6 +152,7 @@ services:
       - _AIRFLOW_WWW_USER_PASSWORD=admin
     volumes:
       - ./dags:/opt/airflow/dags
+      - ./scripts:/opt/airflow/scripts
       - ./jobs:/opt/spark-jobs
       - spark_data:/opt/spark-data
       - ./logs:/opt/airflow/logs
