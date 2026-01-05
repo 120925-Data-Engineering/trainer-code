@@ -1,4 +1,4 @@
-
+# Ignoring logs and pycache
 
 /dags/__pycache__/
 
