@@ -22,7 +22,7 @@ services:
       timeout: 5s
       retries: 5
       networks:
-      - streamflow-network
+        - streamflow-network
 
   # =============================================================================
   # KAFKA (Confluent Platform)
