@@ -154,7 +154,7 @@ with DAG(
         task_id="wait_for_landing_zone",
         filepath=f"{LANDING_ZONE}/{{{{ ds }}}}/user_events.json",
         poke_interval=10,        # Check every 10 seconds
-        timeout=300,             # 5 minute timeout
+        timeout=300000,             # 5 minute timeout
         mode="reschedule",       # Free worker slot while waiting
         soft_fail=False,         # Fail task if timeout
     )

@@ -1,0 +1,11 @@
+product_id,product_name,category,price,quantity_sold,sale_date
+P001,Laptop Pro 15,Electronics,1299.99,25,2024-01-15
+P002,Wireless Mouse,Accessories,29.99,150,2024-01-15
+P003,USB-C Hub,Accessories,49.99,75,2024-01-16
+P004,Monitor 27 inch,Electronics,399.99,40,2024-01-16
+P005,Keyboard Mechanical,Accessories,89.99,60,2024-01-17
+P006,Webcam HD,Accessories,79.99,45,2024-01-17
+P007,Tablet 10 inch,Electronics,449.99,30,2024-01-18
+P008,Phone Stand,Accessories,19.99,200,2024-01-18
+P009,External SSD 1TB,Storage,129.99,55,2024-01-19
+P010,Headphones Wireless,Audio,199.99,35,2024-01-19

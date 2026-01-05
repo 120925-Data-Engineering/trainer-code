@@ -1,0 +1,50 @@
+[
+    {
+        "event_id": "E001",
+        "type": "page_view",
+        "timestamp": "2024-01-15T10:30:00Z",
+        "user_id": "U100",
+        "properties": {
+            "page": "/home"
+        }
+    },
+    {
+        "event_id": "E002",
+        "type": "add_to_cart",
+        "timestamp": "2024-01-15T10:35:00Z",
+        "user_id": "U100",
+        "properties": {
+            "product_id": "P001",
+            "quantity": 1
+        }
+    },
+    {
+        "event_id": "E003",
+        "type": "purchase",
+        "timestamp": "2024-01-15T10:40:00Z",
+        "user_id": "U100",
+        "properties": {
+            "order_id": "O001",
+            "total": 1299.99
+        }
+    },
+    {
+        "event_id": "E004",
+        "type": "page_view",
+        "timestamp": "2024-01-15T11:00:00Z",
+        "user_id": "U101",
+        "properties": {
+            "page": "/products"
+        }
+    },
+    {
+        "event_id": "E005",
+        "type": "search",
+        "timestamp": "2024-01-15T11:05:00Z",
+        "user_id": "U101",
+        "properties": {
+            "query": "laptop",
+            "results_count": 15
+        }
+    }
+]
