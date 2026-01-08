@@ -4,7 +4,7 @@
 **Day:** 4-Thursday  
 **Duration:** 1-1.5 hours  
 **Mode:** Individual (Code Lab)  
-**Prerequisites:** Python 3.8+ installed, Snowflake account with credentials
+**Prerequisites:** Python 3.8-3.12 installed (NOT 3.13 or 3.14), Snowflake account with credentials
 
 ---
 
@@ -57,6 +57,13 @@ python -m venv dbt_env
 ### macOS/Linux Setup
 
 ```bash
+# FIRST: Check your Python version
+python3 --version
+# Must be between 3.8 and 3.12. If you have 3.13 or 3.14, see troubleshooting below.
+
+# If you have multiple Python versions, use a specific one:
+# python3.11 -m venv dbt_env  (example)
+
 # Navigate to your projects directory
 cd ~/Projects
 
@@ -64,13 +71,15 @@ cd ~/Projects
 mkdir dbt_setup_lab
 cd dbt_setup_lab
 
-# Create virtual environment
+# Create virtual environment (use python3.11 or python3.12 if needed)
 python3 -m venv dbt_env
 
 # Activate virtual environment
 source dbt_env/bin/activate
 
 # Verify activation (you should see (dbt_env) in your prompt)
+# Also verify Python version in the venv:
+python --version
 ```
 
 **Checkpoint:** Your terminal prompt should show `(dbt_env)` indicating the virtual environment is active.
@@ -109,7 +118,7 @@ Before configuring dbt, collect these values from your Snowflake account:
 
 | Parameter | Where to Find It | Example |
 |-----------|------------------|---------|
-| **Account** | See "Finding Your Account Identifier" below | `gbhqakj-gd07839` |
+| **Account** | See "Finding Your Account Identifier" below | `gbhqahj-gd07839` |
 | **Username** | Your login username | `john_doe` |
 | **Password** | Your login password | (keep secret!) |
 | **Role** | Current role in Snowflake UI | `ACCOUNTADMIN` |
@@ -249,17 +258,27 @@ source ~/.bashrc  # or ~/.zshrc
 
 ## Part 6: Initialize a dbt Project
 
+Since we already created `profiles.yml` in Part 4, we'll tell dbt to **skip profile setup** and only create the project structure.
+
 ```bash
 # Make sure you're in your lab directory with venv activated
 cd dbt_setup_lab  # or wherever you created the folder
 
-# Initialize a new dbt project
-dbt init snowflake_analytics
+# Initialize project WITHOUT overwriting profiles.yml
+dbt init snowflake_analytics --skip-profile-setup
 ```
 
-When prompted:
-- Enter `1` for Snowflake
-- Press Enter to accept defaults
+When prompted for database type, enter `1` for Snowflake. dbt will create the project files but **not** touch your existing profiles.yml.
+
+### Update dbt_project.yml Profile Name
+
+The project needs to know which profile to use. Open `snowflake_analytics/dbt_project.yml` and verify the profile name matches your profiles.yml:
+
+```yaml
+# dbt_project.yml
+name: 'snowflake_analytics'
+profile: 'snowflake_training'  # Must match the name in ~/.dbt/profiles.yml
+```
 
 ```bash
 # Navigate into the project
@@ -302,11 +321,44 @@ All checks passed!
 
 | Error | Likely Cause | Solution |
 |-------|--------------|----------|
+| `mashumaro.exceptions.UnserializableField` or similar traceback on `dbt --version` | Python 3.13 or 3.14 (unsupported) | Install Python 3.11 or 3.12, recreate venv with that version |
 | `Could not find profile named 'snowflake_training'` | Profile name mismatch | Check `profile:` in dbt_project.yml matches profiles.yml |
 | `Failed to connect to DB: 250001` | Wrong account identifier | Verify account format (no `.snowflakecomputing.com`) |
 | `Incorrect username or password` | Wrong credentials or missing env var | Check `echo $env:SNOWFLAKE_PASSWORD` (Windows) or `echo $SNOWFLAKE_PASSWORD` (Mac) |
 | `env_var('SNOWFLAKE_PASSWORD') is undefined` | Environment variable not set | Set the env var and restart terminal |
 | `Role 'ACCOUNTADMIN' does not exist` | Wrong role | Use role from Snowflake UI dropdown |
+
+### Python Version Issue (macOS)
+
+If you see errors like `mashumaro.exceptions.UnserializableField` when running `dbt --version`, you have an unsupported Python version.
+
+**dbt supports Python 3.8 - 3.12 only.** Python 3.13 and 3.14 are NOT supported.
+
+**Fix:**
+```bash
+# Check current version
+python3 --version
+
+# If 3.13 or 3.14, install Python 3.11 or 3.12:
+# Using Homebrew (recommended):
+brew install python@3.11
+
+# Deactivate current venv
+deactivate
+
+# Remove old venv
+rm -rf dbt_env
+
+# Create new venv with correct Python version
+/opt/homebrew/bin/python3.11 -m venv dbt_env
+# Or: /usr/local/bin/python3.11 -m venv dbt_env (Intel Mac)
+
+# Activate and reinstall
+source dbt_env/bin/activate
+python --version  # Should show 3.11.x
+pip install dbt-snowflake
+dbt --version  # Should work now
+```
 
 ---
 
