@@ -157,6 +157,57 @@ Airflow DAG:
 
 For this training, we focus on **dbt Core** with Snowflake.
 
+### Spark vs. dbt: When to Use Each
+
+You have already worked with PySpark for transformations (think back to the StreamFlow project). So when should you use Spark, and when should you use dbt?
+
+**The short answer:** They are complementary, not competing.
+
+| Use Case | Spark | dbt |
+|----------|-------|-----|
+| **Streaming/real-time data** | Best choice (Structured Streaming) | Not supported (batch only) |
+| **Complex Python logic, ML** | Best choice (UDFs, MLlib, pandas) | Limited (SQL/Jinja only) |
+| **Data lake files (Parquet, Delta)** | Native support | Requires warehouse load first |
+| **Warehouse-native transformations** | Can do, but heavyweight | Purpose-built, optimized |
+| **Built-in testing & documentation** | DIY implementation | Native features |
+| **BI-ready Gold layer** | Possible | Optimized for this pattern |
+
+**A common production architecture:**
+
+```
+[Streaming Sources]
+        |
+        v
+    Kafka (ingestion)
+        |
+        v
+    Spark (heavy ETL, streaming, ML prep)
+        |
+        v
+    Snowflake Bronze (raw data landing)
+        |
+        v
+    dbt (Silver -> Gold transformations)
+        |
+        v
+    BI Tools (Tableau, Looker, Power BI)
+```
+
+**When to choose Spark:**
+- You need streaming or near-real-time processing
+- Your transformations require complex Python logic or ML libraries
+- You are working directly with data lake files before loading to a warehouse
+- Data volumes require distributed processing before reaching the warehouse
+
+**When to choose dbt:**
+- Data is already in a SQL warehouse (Snowflake, BigQuery, Redshift)
+- Transformations are expressible in SQL
+- You need built-in testing, documentation, and lineage
+- Your audience is analysts who prefer SQL over Python
+- You want BI tools to easily understand your data model
+
+**In the StreamFlow context:** Spark handles the Kafka-to-Bronze pipeline (streaming ingestion, initial cleansing). If you extended StreamFlow to write to Snowflake, dbt would then handle the Bronze-to-Silver-to-Gold transformations inside the warehouse.
+
 ### Why dbt Matters
 
 **1. Version Control:**
