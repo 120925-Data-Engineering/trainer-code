@@ -8,6 +8,16 @@
 
 ---
 
+## Required Reading
+
+Before starting this exercise, review the following content:
+
+| Topic | File | Focus Areas |
+|-------|------|-------------|
+| Snowflake Queries | [snowflake-queries.md](../../content/2-Tuesday/snowflake-queries.md) | VARIANT data type, dot notation, LATERAL FLATTEN |
+
+---
+
 ## Learning Objectives
 By the end of this exercise, you will be able to:
 1. Query semi-structured JSON data using VARIANT type

@@ -8,6 +8,18 @@
 
 ---
 
+## Required Reading
+
+Before starting this exercise, review the following content:
+
+| Topic | File | Focus Areas |
+|-------|------|-------------|
+| Data Warehouse Fundamentals | [data-warehouse-fundamentals.md](../../content/1-Monday/data-warehouse-fundamentals.md) | Data warehouse vs data lake concepts |
+| Snowflake Introduction | [snowflake-introduction.md](../../content/1-Monday/snowflake-introduction.md) | What makes Snowflake unique |
+| Snowflake Architecture | [snowflake-architecture.md](../../content/1-Monday/snowflake-architecture.md) | Three-layer architecture, virtual warehouses |
+
+---
+
 ## Learning Objectives
 By the end of this exercise, you will be able to:
 1. Navigate the Snowsight user interface confidently

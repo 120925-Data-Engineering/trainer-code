@@ -8,6 +8,17 @@
 
 ---
 
+## Required Reading
+
+Before starting this exercise, review the following content:
+
+| Topic | File | Focus Areas |
+|-------|------|-------------|
+| Streams and Tasks | [streams-and-tasks.md](../../content/3-Wednesday/streams-and-tasks.md) | Change data capture, task scheduling, automation |
+| Snowpipe Overview | [snowpipe-overview.md](../../content/3-Wednesday/snowpipe-overview.md) | Continuous data loading patterns |
+
+---
+
 ## Learning Objectives
 By the end of this exercise, you will be able to:
 1. Create Streams to track table changes (CDC)

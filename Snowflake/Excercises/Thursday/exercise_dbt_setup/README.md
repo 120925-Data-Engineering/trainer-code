@@ -8,6 +8,17 @@
 
 ---
 
+## Required Reading
+
+Before starting this exercise, review the following content:
+
+| Topic | File | Focus Areas |
+|-------|------|-------------|
+| dbt Introduction | [dbt-introduction.md](../../content/4-Thursday/dbt-introduction.md) | What dbt is, analytics engineering workflow |
+| dbt Project Structure | [dbt-project-structure.md](../../content/4-Thursday/dbt-project-structure.md) | Project anatomy, dbt_project.yml, profiles.yml |
+
+---
+
 ## Learning Objectives
 By the end of this exercise, you will be able to:
 1. Install dbt Core using pip in a virtual environment

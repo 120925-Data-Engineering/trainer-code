@@ -1,0 +1,44 @@
+flowchart TB
+    subgraph Sources["External Sources"]
+        S1[Web Events]
+        S2[Orders]
+        S3[Products]
+        S4[Customers]
+    end
+
+    subgraph Bronze["Bronze Layer (Raw)"]
+        B1[bronze.raw_web_events]
+        B2[bronze.raw_orders]
+        B3[bronze.raw_products]
+        B4[bronze.raw_customers]
+    end
+
+    subgraph Silver["Silver Layer (Cleansed)"]
+        SV1[silver.events]
+        SV2[silver.orders]
+        SV3[silver.products]
+        SV4[silver.customers]
+    end
+
+    subgraph Gold["Gold Layer (Business)"]
+        G1[gold.daily_sales]
+        G2[gold.customer_360]
+    end
+
+    %% Data flow from sources to bronze
+    S1 --> B1
+    S2 --> B2
+    S3 --> B3
+    S4 --> B4
+
+    %% Data flow from bronze to silver
+    B1 --> SV1
+    B2 --> SV2
+    B3 --> SV3
+    B4 --> SV4
+
+    %% Data flow from silver to gold
+    SV1 --> G1
+    SV2 --> G1
+    SV2 --> G2
+    SV4 --> G2

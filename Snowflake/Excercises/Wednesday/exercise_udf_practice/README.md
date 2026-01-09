@@ -8,6 +8,16 @@
 
 ---
 
+## Required Reading
+
+Before starting this exercise, review the following content:
+
+| Topic | File | Focus Areas |
+|-------|------|-------------|
+| Snowflake UDFs | [snowflake-udfs.md](../../content/3-Wednesday/snowflake-udfs.md) | SQL UDFs, JavaScript UDFs, Python UDFs, use cases |
+
+---
+
 ## Learning Objectives
 By the end of this exercise, you will be able to:
 1. Create SQL UDFs for reusable calculations

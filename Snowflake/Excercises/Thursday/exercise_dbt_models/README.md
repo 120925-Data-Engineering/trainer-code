@@ -8,6 +8,18 @@
 
 ---
 
+## Required Reading
+
+Before starting this exercise, review the following content:
+
+| Topic | File | Focus Areas |
+|-------|------|-------------|
+| dbt Sources and Staging | [dbt-sources-staging.md](../../content/4-Thursday/dbt-sources-staging.md) | source(), ref(), dependency graphs |
+| dbt Project Structure | [dbt-project-structure.md](../../content/4-Thursday/dbt-project-structure.md) | Models, seeds, tests, macros |
+| dbt Introduction | [dbt-introduction.md](../../content/4-Thursday/dbt-introduction.md) | Materialization concepts |
+
+---
+
 ## Learning Objectives
 By the end of this exercise, you will be able to:
 1. Define sources in dbt to reference raw data

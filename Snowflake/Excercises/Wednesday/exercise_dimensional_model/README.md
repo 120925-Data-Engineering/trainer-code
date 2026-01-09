@@ -8,6 +8,17 @@
 
 ---
 
+## Required Reading
+
+Before starting this exercise, review the following content:
+
+| Topic | File | Focus Areas |
+|-------|------|-------------|
+| Dimensional Modeling | [dimensional-modeling.md](../../content/3-Wednesday/dimensional-modeling.md) | Star schema, dimensions, facts, normalization |
+| Data Loading Best Practices | [data-loading-best-practices.md](../../content/3-Wednesday/data-loading-best-practices.md) | Performance optimization, file sizing |
+
+---
+
 ## Learning Objectives
 By the end of this exercise, you will be able to:
 1. Design a star schema for a business scenario

@@ -8,6 +8,17 @@
 
 ---
 
+## Required Reading
+
+Before starting this exercise, review the following content:
+
+| Topic | File | Focus Areas |
+|-------|------|-------------|
+| Data Loading Fundamentals | [data-loading-fundamentals.md](../../content/2-Tuesday/data-loading-fundamentals.md) | COPY INTO, file formats, staging |
+| Schemas and Objects | [snowflake-schemas-and-objects.md](../../content/2-Tuesday/snowflake-schemas-and-objects.md) | Stages, file formats, object types |
+
+---
+
 ## Learning Objectives
 By the end of this exercise, you will be able to:
 1. Create file formats for CSV and JSON data

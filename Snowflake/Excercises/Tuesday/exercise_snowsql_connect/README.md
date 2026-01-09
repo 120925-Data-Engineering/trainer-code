@@ -8,6 +8,18 @@
 
 ---
 
+## Required Reading
+
+Before starting this exercise, review the following content:
+
+| Topic | File | Focus Areas |
+|-------|------|-------------|
+| SnowSQL Basics | [snowsql-basics.md](../../content/2-Tuesday/snowsql-basics.md) | Installation, connection configuration, CLI commands |
+| Snowflake Queries | [snowflake-queries.md](../../content/2-Tuesday/snowflake-queries.md) | Query syntax, VARIANT data type |
+| Schemas and Objects | [snowflake-schemas-and-objects.md](../../content/2-Tuesday/snowflake-schemas-and-objects.md) | Object types, naming conventions |
+
+---
+
 ## Learning Objectives
 By the end of this exercise, you will be able to:
 1. Install and configure SnowSQL CLI

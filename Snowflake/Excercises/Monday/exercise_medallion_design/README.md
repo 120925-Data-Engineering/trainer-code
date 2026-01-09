@@ -8,6 +8,17 @@
 
 ---
 
+## Required Reading
+
+Before starting this exercise, review the following content:
+
+| Topic | File | Focus Areas |
+|-------|------|-------------|
+| Medallion Architecture | [medallion-architecture.md](../../content/1-Monday/medallion-architecture.md) | Bronze/Silver/Gold layers, data quality progression |
+| Data Warehouse Fundamentals | [data-warehouse-fundamentals.md](../../content/1-Monday/data-warehouse-fundamentals.md) | When to use data lakes vs warehouses |
+
+---
+
 ## Learning Objectives
 By the end of this exercise, you will be able to:
 1. Design a Medallion architecture (Bronze/Silver/Gold) for a real business scenario
