@@ -38,7 +38,12 @@ def generate_user_event():
     """Generate a single mock user event."""
     user_id = random.choice(USER_POOL)  # Select from shared pool for joinability
     session_id = fake.uuid4()[:12]
-    event_type = random.choice(EVENT_TYPES)
+    # Weighted distribution to increase cart events for meaningful product_id joins
+    # login=10%, logout=5%, page_view=20%, click=10%, search=10%, add_to_cart=30%, remove_from_cart=15%
+    event_type = random.choices(
+        EVENT_TYPES,
+        weights=[0.10, 0.05, 0.20, 0.10, 0.10, 0.30, 0.15]
+    )[0]
     
     event = {
         "event_id": fake.uuid4(),
