@@ -1,0 +1,21 @@
+cust   name,ORDER.DATE,$amount,qty,STATUS,category ,duplicate_id,discount
+John Smith,01/15/2024,150.00,5,active,Electronics,1001,
+JANE DOE,2024-01-16,275.50,2,Active,electronics,1002,10%
+john smith,15-01-2024,89.99,,ACTIVE,HOME & GARDEN,1003,0
+Robert Johnson,01/17/2024,1200,3,pending,ELECTRONICS,1004,5%
+Emily Wilson,01/18/2024,,"",completed,Clothing,1005,
+MICHAEL BROWN,2024/01/18,450.00,1,Completed,clothing,1006,15%
+John Smith,01/15/2024,150.00,5,active,Electronics,1001,
+Sarah Davis,19-Jan-2024,320.75,4,PENDING,Home & Garden,1007,
+,01/20/2024,85.00,2,cancelled,,1008,
+ROBERT JOHNSON,01/17/2024,1200,3,Pending,electronics,1004,5%
+Lisa Anderson,01-21-2024,199.99,1,active,CLOTHING,1009,20%
+Chris Taylor,2024-01-22,NULL,6,Active,Books,1010,
+jennifer martinez,01/23/2024,550.00,2,completed,Home & Garden ,1011,
+David Lee,24/01/2024,375.25,3,COMPLETED,Electronics,1012,10%
+Emily Wilson,01/18/2024,,1,completed,Clothing,1005,
+amanda white,01/25/2024,425.00,4,Active,BOOKS,1013,
+Kevin Harris,01-26-2024,890.50,2,pending,Electronics,1014,5%
+SARAH DAVIS,19-Jan-2024,320.75,4,pending,Home & Garden,1007,
+Michelle Clark,2024/01/27,175.00,5,Cancelled,clothing,1015,
+james robinson,01/28/2024,650.00,,active,Books,1016,15%
