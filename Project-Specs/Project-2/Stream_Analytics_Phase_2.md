@@ -178,6 +178,7 @@ Assets provided in the `assets/` directory:
 
 > [!IMPORTANT]
 > **Trainees Build From Scratch:**
+>
 > - Airflow DAG for Snowflake loading (Week 4 skills)
 > - Kafka batch consumer (Week 3-4 skills)
 > - All Snowflake SQL: stages, Bronze/Silver/Gold tables, Tasks (Week 5 skills)
@@ -210,7 +211,6 @@ What trainees must build and demonstrate:
 | **Data Volume** | 50k+ events via bulk mode |
 | **Credentials** | Environment variables, never committed to repo |
 | **Phase 1 Dependency** | Requires Phase 1 stack running for CSV output |
-
 
 ## 8. Related Documentation
 
