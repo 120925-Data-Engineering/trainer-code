@@ -1,0 +1,26 @@
+﻿// Seeing data as PowerBI sees it
+EVALUATE DIM_CUSTOMER
+
+//This expression is too large - exceeds DAX Studio's 1,000,000 row limit!
+EVALUATE FCT_ORDER_LINES
+
+/* 
+	A simple aggregate example - Dax Studio can only work with 1,000,000 rows
+	at any given time. We have to be mindful of how many rows we are asking DAX
+	to work with regardless of how many we actually ask it to return. 
+*/
+
+EVALUATE
+TOPN(
+	10,
+	SUMMARIZECOLUMNS(
+		DIM_CUSTOMER[Customer Name],
+		"Total Revenue", SUM(FCT_ORDER_LINES[NET_AMOUNT])
+	),
+	[Total Revenue], DESC
+)
+
+
+EVALUATE DIM_DATE
+
+EVALUATE DIM_PRODUCT
