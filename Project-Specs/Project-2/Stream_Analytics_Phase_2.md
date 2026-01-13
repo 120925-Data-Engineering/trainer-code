@@ -215,3 +215,4 @@ What trainees must build and demonstrate:
 ## 8. Related Documentation
 
 - [Phase 1 Specification](https://github.com/120925-Data-Engineering/trainer-code/blob/main/Project-Specs/Project-1/Stream_Analytics_Platform.md)
+- [Group Assignments](https://github.com/120925-Data-Engineering/trainer-code/blob/main/Project-Specs/Project-2/Groups.md)
