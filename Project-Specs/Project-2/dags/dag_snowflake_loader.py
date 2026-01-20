@@ -3,8 +3,13 @@ StreamFlow Phase 2 DAG - Loads Gold Zone CSVs into Snowflake Bronze tables.
 
 Prerequisites:
     1. Configure Airflow Connection 'snowflake_default' in Admin → Connections
-    2. Create CSV_STAGE and CSV_FORMAT in Snowflake BRONZE schema
-    3. Create Bronze tables (raw_user_events, raw_transactions, etc.)
+    2. Create CSV_STAGE in Snowflake BRONZE schema:
+       Internal stage (temporary cloud storage for file uploads).
+       Snowflake cannot load local files directly - files must first be
+       uploaded to a stage, then copied into tables.
+       Example: CREATE STAGE CSV_STAGE;
+    3. Create Bronze tables (raw_user_events, raw_transactions, etc.) If you've already created your tables,
+       those existing names. 
 """
 from airflow import DAG
 from airflow.operators.python import PythonOperator
@@ -39,11 +44,11 @@ def load_to_snowflake(**context):
             # PUT uploads local file to Snowflake internal stage
             cursor.execute(f"PUT file://{csv_file} @CSV_STAGE AUTO_COMPRESS=TRUE OVERWRITE=TRUE")
         
-        # COPY INTO loads staged files into the Bronze table
+        # COPY INTO loads staged files into the Bronze table (inline CSV format)
         cursor.execute(f"""
             COPY INTO {table}
             FROM @CSV_STAGE
-            FILE_FORMAT = (FORMAT_NAME = 'CSV_FORMAT')
+            FILE_FORMAT = (TYPE = 'CSV' SKIP_HEADER = 1)
             ON_ERROR = 'CONTINUE'
         """)
     
