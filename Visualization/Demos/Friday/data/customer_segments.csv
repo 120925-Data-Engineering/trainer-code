@@ -1,0 +1,5 @@
+segment,count,revenue,avg_value
+New Customers,2500,125000.00,50.00
+Returning,5200,520000.00,100.00
+VIP,800,320000.00,400.00
+At Risk,1200,60000.00,50.00
