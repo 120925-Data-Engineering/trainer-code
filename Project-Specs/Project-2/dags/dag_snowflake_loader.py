@@ -8,8 +8,7 @@ Prerequisites:
        Snowflake cannot load local files directly - files must first be
        uploaded to a stage, then copied into tables.
        Example: CREATE STAGE CSV_STAGE;
-    3. Create Bronze tables (raw_user_events, raw_transactions, etc.) If you've already created your tables,
-       those existing names. 
+    3. Create Bronze tables (raw_user_events, raw_transactions, etc.)
 """
 from airflow import DAG
 from airflow.operators.python import PythonOperator
@@ -52,7 +51,7 @@ def load_to_snowflake(**context):
             ON_ERROR = 'CONTINUE'
         """)
     
-    # Clean up stage after loading
+    # Clean up staged files (REMOVE deletes files only, not the stage itself - stage persists for reuse)
     cursor.execute("REMOVE @CSV_STAGE")
     conn.commit()
     cursor.close()
